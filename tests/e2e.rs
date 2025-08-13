@@ -1,4 +1,7 @@
+use std::env;
+
 #[test]
 fn e2e() {
-    assert_eq!(1, 2)
+    let binary_path = env::args().nth(2).unwrap();
+    assert_eq!(binary_path, "target/debug/hrh");
 }
