@@ -7,7 +7,7 @@ use std::process::{Command, Stdio};
 pub mod config;
 mod declaration;
 
-pub fn run(config: config::Config) {
+pub fn run(config: Config) {
     println!("{:?}", config);
     let file = File::open(&config.file).expect("file not found");
     let mut declaration: Declaration = serde_yaml::from_reader(file).expect("failed to parse yaml");
