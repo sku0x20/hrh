@@ -8,10 +8,10 @@ pub fn run(config: config::Config) {
 }
 
 fn execute_helm(helm: String) {
-    let output = Command::new(helm)
+    Command::new(helm)
         .args(["--something", "tests/resources.out"])
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
         .output()
         .expect("failed to execute helm");
 }
