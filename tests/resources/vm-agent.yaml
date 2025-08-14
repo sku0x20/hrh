@@ -1,6 +1,6 @@
 releaseName: pod-collector
 namespace: observability
 valuesFile: pod-collector.yaml
-chatName: victoria-metrics-agent
+chartName: victoria-metrics-agent
 repo: vm
 repoUrl: https://victoriametrics.github.io/helm-charts
