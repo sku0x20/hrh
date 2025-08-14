@@ -37,6 +37,6 @@ fn e2e() {
 
     assert_eq!(
         output,
-        "./fake_helm.sh upgrade --install pod-collector vm/victoria-metrics-agent --namespace observability -f pod-collector.yaml\n"
+        "upgrade --install pod-collector vm/victoria-metrics-agent --namespace observability -f pod-collector.yaml\n"
     );
 }
