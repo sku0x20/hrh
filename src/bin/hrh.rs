@@ -1,4 +1,4 @@
-use hrh::Config;
+use hrh::config::Config;
 use std::vec::IntoIter;
 
 fn main() {
