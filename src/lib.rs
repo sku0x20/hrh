@@ -13,16 +13,33 @@ pub fn run(config: Config) {
     let mut declaration: Declaration = serde_yaml::from_reader(file).expect("failed to parse yaml");
     declaration = transform(declaration, &config);
     println!("{:?}", declaration);
-    execute_helm(config.helm_path);
+    let helm_args = helm_args(declaration);
+    execute_helm(config.helm_path, helm_args);
 }
 
-fn execute_helm(helm: String) {
+fn execute_helm(
+    helm: String,
+    args: Vec<String>,
+) {
     Command::new(helm)
-        .args(["--something", "tests/resources.out"])
+        .args(args)
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
         .output()
         .expect("failed to execute helm");
+}
+
+fn helm_args(declaration: Declaration) -> Vec<String> {
+    return vec![
+        String::from("upgrade"),
+        String::from("--install"),
+        declaration.release_name,
+        format!("{}/{}", declaration.repo, declaration.chart_name),
+        String::from("--namespace"),
+        declaration.namespace,
+        String::from("--values"),
+        declaration.values_file,
+    ];
 }
 
 fn transform(
