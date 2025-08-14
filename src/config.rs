@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Config {
     pub file: String,
     pub helm_path: String,
