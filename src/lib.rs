@@ -1,3 +1,4 @@
+use crate::config::Config;
 use crate::declaration::Declaration;
 use std::fs::File;
 use std::path::Path;
@@ -10,7 +11,7 @@ pub fn run(config: config::Config) {
     println!("{:?}", config);
     let file = File::open(&config.file).expect("file not found");
     let mut declaration: Declaration = serde_yaml::from_reader(file).expect("failed to parse yaml");
-    declaration = transform(declaration, &config.file);
+    declaration = transform(declaration, &config);
     println!("{:?}", declaration);
     execute_helm(config.helm_path);
 }
@@ -26,10 +27,10 @@ fn execute_helm(helm: String) {
 
 fn transform(
     declaration: Declaration,
-    config_file: &str,
+    config: &Config,
 ) -> Declaration {
     let mut tranformed = declaration.clone();
-    transform_file_path(&mut tranformed, config_file);
+    transform_file_path(&mut tranformed, &config.file);
     return tranformed;
 }
 
