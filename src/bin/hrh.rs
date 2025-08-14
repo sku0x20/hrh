@@ -1,11 +1,12 @@
 use hrh::config::Config;
+use hrh::run;
 use std::vec::IntoIter;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let mut config = Config::new();
     parse_args(args.into_iter(), &mut config);
-    println!("{:?}", config);
+    run(config);
 }
 
 fn parse_args(
