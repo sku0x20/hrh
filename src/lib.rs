@@ -6,13 +6,14 @@ use std::process::{Command, Stdio};
 
 pub mod config;
 mod declaration;
+mod logger;
 
 pub fn run(config: Config) {
-    println!("{:?}", config);
+    debug!("{:?}", config);
     let file = File::open(&config.file).expect("file not found");
     let mut declaration: Declaration = serde_yaml::from_reader(file).expect("failed to parse yaml");
     declaration = transform(declaration, &config);
-    println!("{:?}", declaration);
+    debug!("{:?}", declaration);
     let helm_args = helm_args(declaration);
     execute_helm(config.helm_path, helm_args);
 }
