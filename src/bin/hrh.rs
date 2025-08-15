@@ -1,8 +1,11 @@
 use hrh::config::Config;
+use hrh::logger::init_logger;
 use hrh::run;
 use std::vec::IntoIter;
 
 fn main() {
+    init_logger();
+
     let args: Vec<String> = std::env::args().collect();
     let mut config = Config::new();
     parse_args(args.into_iter(), &mut config);
