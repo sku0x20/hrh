@@ -6,7 +6,7 @@ use std::process::{Command, Stdio};
 
 pub mod config;
 mod declaration;
-mod logger;
+pub mod logger;
 
 pub fn run(config: Config) {
     debug!("{:?}", config);
