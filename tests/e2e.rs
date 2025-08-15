@@ -26,7 +26,6 @@ fn e2e() {
         .output()
         .expect("failed to execute process");
 
-    println!("{:#?}", output);
     assert!(output.status.success());
     let mut fake_helm_out =
         File::open(OUTPUT_FILE).expect(&format!("failed to open {}", OUTPUT_FILE));
