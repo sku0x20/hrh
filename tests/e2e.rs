@@ -37,7 +37,7 @@ fn release() {
 
     assert_eq!(
         output,
-        "upgrade --install pod-collector vm/victoria-metrics-agent --namespace observability --values tests/resources/pod-collector.yaml\n"
+        "upgrade --atomic --install pod-collector vm/victoria-metrics-agent --namespace observability --values tests/resources/pod-collector.yaml\n"
     );
 }
 

@@ -49,6 +49,7 @@ fn helm_args(
     } else {
         vec![
             String::from("upgrade"),
+            String::from("--atomic"),
             String::from("--install"),
             declaration.release_name,
             format!("{}/{}", declaration.repo, declaration.chart_name),
