@@ -1,14 +1,15 @@
+use std::fs;
 use std::fs::File;
 use std::io::Read;
 use std::process::Command;
 use std::process::Stdio;
-use std::{env, fs};
 
 const OUTPUT_FILE: &str = "fake_helm.out";
+const EXE_PATH: &str = "target/debug/hrh";
 
 #[test]
 fn release() {
-    let binary_path = env::args().last().unwrap();
+    let binary_path = EXE_PATH;
 
     fs::remove_file(OUTPUT_FILE).unwrap_or_else(|_| {
         eprintln!("failed to remove fake_helm.out");
@@ -42,7 +43,7 @@ fn release() {
 
 #[test]
 fn diff() {
-    let binary_path = env::args().last().unwrap();
+    let binary_path = EXE_PATH;
 
     fs::remove_file(OUTPUT_FILE).unwrap_or_else(|_| {
         eprintln!("failed to remove fake_helm.out");

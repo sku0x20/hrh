@@ -14,7 +14,7 @@ pub fn run(config: Config) {
     let mut declaration: Declaration = serde_yaml::from_reader(file).expect("failed to parse yaml");
     declaration = transform(declaration, &config);
     debug!("{:?}", declaration);
-    let helm_args = helm_args(declaration);
+    let helm_args = helm_args(&config, declaration);
     execute_helm(config.helm_path, helm_args);
 }
 
@@ -30,17 +30,34 @@ fn execute_helm(
         .expect("failed to execute helm");
 }
 
-fn helm_args(declaration: Declaration) -> Vec<String> {
-    return vec![
-        String::from("upgrade"),
-        String::from("--install"),
-        declaration.release_name,
-        format!("{}/{}", declaration.repo, declaration.chart_name),
-        String::from("--namespace"),
-        declaration.namespace,
-        String::from("--values"),
-        declaration.values_file,
-    ];
+fn helm_args(
+    config: &Config,
+    declaration: Declaration,
+) -> Vec<String> {
+    if config.is_diff {
+        vec![
+            String::from("diff"),
+            String::from("upgrade"),
+            String::from("--namespace"),
+            declaration.namespace,
+            String::from("--allow-unreleased"),
+            declaration.release_name,
+            format!("{}/{}", declaration.repo, declaration.chart_name),
+            String::from("--values"),
+            declaration.values_file,
+        ]
+    } else {
+        vec![
+            String::from("upgrade"),
+            String::from("--install"),
+            declaration.release_name,
+            format!("{}/{}", declaration.repo, declaration.chart_name),
+            String::from("--namespace"),
+            declaration.namespace,
+            String::from("--values"),
+            declaration.values_file,
+        ]
+    }
 }
 
 fn transform(
