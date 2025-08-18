@@ -28,6 +28,7 @@ fn parse_arg(
     config: &mut Config,
 ) {
     match flag {
+        "--diff" => config.is_diff = true,
         "--file" | "-f" => {
             config.file = into_iter.next().unwrap();
         }
