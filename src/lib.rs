@@ -1,20 +1,20 @@
 use crate::config::Config;
-use crate::declaration::Declaration;
+use crate::release::Release;
 use std::fs::File;
 use std::path::Path;
 use std::process::{Command, Stdio};
 
 pub mod config;
-mod declaration;
 pub mod logger;
+mod release;
 
 pub fn run(config: Config) {
     debug!("{:?}", config);
     let file = File::open(&config.file).expect("file not found");
-    let mut declaration: Declaration = serde_yaml::from_reader(file).expect("failed to parse yaml");
-    declaration = transform(declaration, &config);
-    debug!("{:?}", declaration);
-    let helm_args = helm_args(&config, declaration);
+    let mut release: Release = serde_yaml::from_reader(file).expect("failed to parse yaml");
+    release = transform(release, &config);
+    debug!("{:?}", release);
+    let helm_args = helm_args(&config, release);
     execute_helm(config.helm_path, helm_args);
 }
 
@@ -32,57 +32,56 @@ fn execute_helm(
 
 fn helm_args(
     config: &Config,
-    declaration: Declaration,
+    release: Release,
 ) -> Vec<String> {
     if config.is_diff {
         vec![
             String::from("diff"),
             String::from("upgrade"),
             String::from("--namespace"),
-            declaration.namespace,
+            release.namespace,
             String::from("--allow-unreleased"),
-            declaration.release_name,
-            format!("{}/{}", declaration.repo, declaration.chart_name),
+            release.release_name,
+            format!("{}/{}", release.repo, release.chart_name),
             String::from("--values"),
-            declaration.values_file,
+            release.values_file,
             String::from("--version"),
-            declaration.version,
+            release.version,
         ]
     } else {
         vec![
             String::from("upgrade"),
             String::from("--atomic"),
             String::from("--install"),
-            declaration.release_name,
-            format!("{}/{}", declaration.repo, declaration.chart_name),
+            release.release_name,
+            format!("{}/{}", release.repo, release.chart_name),
             String::from("--namespace"),
-            declaration.namespace,
+            release.namespace,
             String::from("--values"),
-            declaration.values_file,
+            release.values_file,
             String::from("--version"),
-            declaration.version,
+            release.version,
         ]
     }
 }
 
 fn transform(
-    declaration: Declaration,
+    release: Release,
     config: &Config,
-) -> Declaration {
-    let mut tranformed = declaration.clone();
+) -> Release {
+    let mut tranformed = release.clone();
     transform_file_path(&mut tranformed, &config.file);
     return tranformed;
 }
 
 fn transform_file_path(
-    declaration: &mut Declaration,
+    release: &mut Release,
     config_file: &str,
 ) {
     let file_path = Path::new(config_file);
-    let values_file_path = Path::new(&declaration.values_file);
+    let values_file_path = Path::new(&release.values_file);
     if values_file_path.is_relative() {
         let parent_path = file_path.parent().expect("failed to get parent path");
-        declaration.values_file =
-            String::from(parent_path.join(values_file_path).to_str().unwrap());
+        release.values_file = String::from(parent_path.join(values_file_path).to_str().unwrap());
     }
 }

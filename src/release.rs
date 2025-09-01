@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Declaration {
+pub struct Release {
     pub release_name: String,
     pub namespace: String,
     pub values_file: String,
