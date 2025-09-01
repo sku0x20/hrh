@@ -7,6 +7,7 @@ pub struct Declaration {
     pub namespace: String,
     pub values_file: String,
     pub chart_name: String,
+    pub version: String,
     pub repo: String,
     pub repo_url: String,
 }

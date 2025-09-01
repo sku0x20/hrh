@@ -37,7 +37,7 @@ fn release() {
 
     assert_eq!(
         output,
-        "upgrade --atomic --install pod-collector vm/victoria-metrics-agent --namespace observability --values tests/resources/pod-collector.yaml\n"
+        "upgrade --atomic --install pod-collector vm/victoria-metrics-agent --namespace observability --values tests/resources/pod-collector.yaml --version v1.1.1\n"
     );
 }
 
@@ -72,6 +72,6 @@ fn diff() {
 
     assert_eq!(
         output,
-        "diff upgrade --namespace observability --allow-unreleased pod-collector vm/victoria-metrics-agent --values tests/resources/pod-collector.yaml\n"
+        "diff upgrade --namespace observability --allow-unreleased pod-collector vm/victoria-metrics-agent --values tests/resources/pod-collector.yaml --version v1.1.1\n"
     );
 }

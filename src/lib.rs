@@ -45,6 +45,8 @@ fn helm_args(
             format!("{}/{}", declaration.repo, declaration.chart_name),
             String::from("--values"),
             declaration.values_file,
+            String::from("--version"),
+            declaration.version,
         ]
     } else {
         vec![
@@ -57,6 +59,8 @@ fn helm_args(
             declaration.namespace,
             String::from("--values"),
             declaration.values_file,
+            String::from("--version"),
+            declaration.version,
         ]
     }
 }
