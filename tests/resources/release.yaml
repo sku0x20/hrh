@@ -1,6 +1,6 @@
 releaseName: pod-collector
 namespace: observability
-valuesFile: pod-collector.yaml
+valuesFile: values.yaml
 chartName: victoria-metrics-agent
 version: v1.1.1
 repo: vm

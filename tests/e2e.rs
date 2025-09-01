@@ -18,7 +18,7 @@ fn release() {
     let output = Command::new(binary_path)
         .args([
             "-f",
-            "tests/resources/vm-agent.yaml",
+            "tests/resources/release.yaml",
             "--helm-path",
             "./fake_helm.sh",
         ])
@@ -37,7 +37,7 @@ fn release() {
 
     assert_eq!(
         output,
-        "upgrade --atomic --install pod-collector vm/victoria-metrics-agent --namespace observability --values tests/resources/pod-collector.yaml --version v1.1.1\n"
+        "upgrade --atomic --install pod-collector vm/victoria-metrics-agent --namespace observability --values tests/resources/values.yaml --version v1.1.1\n"
     );
 }
 
@@ -53,7 +53,7 @@ fn diff() {
         .args([
             "--diff",
             "-f",
-            "tests/resources/vm-agent.yaml",
+            "tests/resources/release.yaml",
             "--helm-path",
             "./fake_helm.sh",
         ])
@@ -72,6 +72,6 @@ fn diff() {
 
     assert_eq!(
         output,
-        "diff upgrade --namespace observability --allow-unreleased pod-collector vm/victoria-metrics-agent --values tests/resources/pod-collector.yaml --version v1.1.1\n"
+        "diff upgrade --namespace observability --allow-unreleased pod-collector vm/victoria-metrics-agent --values tests/resources/values.yaml --version v1.1.1\n"
     );
 }
