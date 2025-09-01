@@ -11,12 +11,17 @@ hrh ("Heal Release Helper") is a small utility that reads a YAML declaration of 
 - Minimal debug logging toggled via `DEBUG=1`
 
 ## Installation
-Build from source with Rust (stable):
+You can either build locally or install the binary into your Cargo bin directory.
 
+- Install into Cargo bin (adds hrh to ~/.cargo/bin):
+```
+cargo install --path .
+```
+
+- Build from source with Rust (stable):
 ```
 cargo build --release
 ```
-
 The binary will be at `target/release/hrh`.
 
 ## Usage
