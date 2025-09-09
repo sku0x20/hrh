@@ -1,6 +1,6 @@
-# hrh — Heal Release Helper
+# hrh — Helm Release Helper
 
-hrh ("Heal Release Helper") is a small utility that reads a YAML declaration of a Helm release and executes Helm with the corresponding arguments.
+hrh ("Helm Release Helper") is a small utility that reads a YAML declaration of a Helm release and executes Helm with the corresponding arguments.
 
 - Input: a .yaml file containing Helm release information
 - Action: invokes `helm upgrade --install ...` using the provided data
